@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import NumberFormat from 'react-number-format';
+import { NavigationProp } from '@react-navigation/native';
 
 const mockupData = [
   {
@@ -100,14 +101,25 @@ const mockupData = [
   },
 ];
 
-export default function Products() {
+export default function Products({
+  navigation,
+}: {
+  navigation: NavigationProp<any>;
+}) {
   return (
     <FlatList
       data={mockupData}
       keyExtractor={i => i.id}
       numColumns={2}
       renderItem={({ item }) => {
-        return <ListItem {...item} />;
+        return (
+          <ListItem
+            {...item}
+            onPress={() =>
+              navigation.navigate('ProductDetail', { id: item.id })
+            }
+          />
+        );
       }}
       contentContainerStyle={{
         padding: 5,
@@ -122,12 +134,14 @@ function ListItem({
   price,
   calories,
   imageUrl,
+  onPress,
 }: {
   name: string;
   desc?: string;
   price: number;
   calories: number;
   imageUrl: string;
+  onPress: () => void;
 }) {
   return (
     <View style={productsStyle.container}>
@@ -155,6 +169,7 @@ function ListItem({
 
       <View style={productsStyle.absoluteCircle}>
         <TouchableNativeFeedback
+          onPress={onPress}
           background={TouchableNativeFeedback.Ripple('#efefef', true)}
         >
           <View style={{ flex: 1 }}>
