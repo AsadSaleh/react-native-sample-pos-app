@@ -1,21 +1,13 @@
-import { NavigationContainer, NavigationProp } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { Button, Text, View } from 'react-native';
-import Products from './screens/Products';
-import ProductDetail from './screens/ProductDetail';
-
-function ModalScreen({ navigation }: { navigation: NavigationProp<any> }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ fontSize: 30 }}>This is a modal!</Text>
-      <Button onPress={() => navigation.goBack()} title="Dismiss" />
-    </View>
-  );
-}
+import Cart from 'src/screens/Cart';
+import ProductDetail from './src/screens/ProductDetail';
+import Products from './src/screens/Products';
+import { RootStackParamList } from 'src/types';
 
 const MainStack = createStackNavigator();
-const RootStack = createStackNavigator();
+const RootStack = createStackNavigator<RootStackParamList>();
 
 function MainStackScreen() {
   return (
@@ -35,7 +27,7 @@ function RootStackScreen() {
           component={MainStackScreen}
           options={{ headerShown: false }}
         />
-        <RootStack.Screen name="MyModal" component={ModalScreen} />
+        <RootStack.Screen name="Cart" component={Cart} />
       </RootStack.Navigator>
     </NavigationContainer>
   );
