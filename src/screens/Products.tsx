@@ -6,7 +6,8 @@ import {
   TouchableNativeFeedback,
 } from 'react-native-gesture-handler';
 import NumberFormat from 'src/components/NumberFormat';
-import ListItem, { Item } from '../components/ListItem';
+import ListItem from '../components/ListItem';
+import { Item } from 'src/types';
 
 const mockupData = [
   {
@@ -26,7 +27,7 @@ const mockupData = [
     id: '2',
   },
   {
-    name: 'Keyboard',
+    name: 'Steelseries Apex Pro Fullsize - Omnipoint Switch Mechanical RGB',
     imageUrl: 'https://picsum.photos/200',
     price: 300000,
     desc: 'A tool to watch',
@@ -34,7 +35,7 @@ const mockupData = [
     id: '3',
   },
   {
-    name: 'TV',
+    name: 'Steelseries Apex 7 TKL Keyboard Gaming RGB - Red Switch',
     imageUrl: 'https://picsum.photos/200',
     price: 5000000,
     desc: 'A tool to watch',

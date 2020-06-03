@@ -1,28 +1,49 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import NumberFormat from 'src/components/NumberFormat';
+import QuantityInput from 'src/components/QuantityInput';
 import { RootStackParamList } from 'src/types';
 
 type CartProps = StackScreenProps<RootStackParamList, 'Cart'>;
 
-export default function Cart({ navigation, route }: CartProps) {
+const { width } = Dimensions.get('window');
+
+export default function Cart({ route }: CartProps) {
   const { items } = route.params;
   return (
     <FlatList
       data={items}
       ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+      ListHeaderComponentStyle={{ height: 10 }}
+      ListHeaderComponent={View}
+      style={{ backgroundColor: 'white' }}
       renderItem={({ item }) => (
         <View style={cartStyle.container}>
-          <Image
-            source={{ uri: item.imageUrl }}
-            style={{ width: 150, height: 150 }}
-          />
-          <View>
-            <Text style={cartStyle.nameText}>{item.name}</Text>
+          <View style={cartStyle.imageContainer}>
+            <Image
+              source={{ uri: item.imageUrl }}
+              style={cartStyle.itemImage}
+            />
+          </View>
+          <View style={cartStyle.textContainer}>
+            <Text style={cartStyle.nameText} numberOfLines={2}>
+              {item.name}
+            </Text>
             <Text style={cartStyle.priceText}>
               <NumberFormat value={item.price} />
             </Text>
+            <View style={cartStyle.inputContainer}>
+              {/* <TextInput style={cartStyle.input} /> */}
+              <QuantityInput />
+            </View>
           </View>
         </View>
       )}
@@ -31,16 +52,44 @@ export default function Cart({ navigation, route }: CartProps) {
 }
 
 const cartStyle = StyleSheet.create({
+  // Text
+  nameText: {},
+  priceText: {
+    marginTop: 5,
+    fontWeight: 'bold',
+  },
+
+  // View
   container: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginHorizontal: 10,
+    height: 120,
+    // marginHorizontal: 10,
   },
-  nameText: {
-    textAlign: 'right',
+  imageContainer: {
+    width: (3 / 8) * width,
+    paddingLeft: 10,
   },
-  priceText: {
-    textAlign: 'right',
+  textContainer: {
+    width: (4 / 8) * width,
+    padding: 10,
+  },
+  inputContainer: {
+    flex: 1,
+    alignItems: 'flex-end',
+  },
+
+  // Image
+  itemImage: {
+    borderRadius: 20,
+    flex: 1,
+  },
+
+  // Input
+  input: {
+    borderRadius: 5,
+    fontSize: 20,
+    backgroundColor: 'green',
   },
 });
